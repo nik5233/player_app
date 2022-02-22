@@ -39,7 +39,7 @@ class PlayerCard extends Component {
                             <div className="points center">
                                 {player.TotPts} Points
                             </div>
-                            <img src={`/player-images/${player.Id}.jpg`} width="110" height="110" className="center image--cover" alt="" />
+                            <img src={`/player_app/player-images/${player.Id}.jpg`} width="110" height="110" className="center image--cover" alt="" />
                         </div>
                         <div className="more-info">
                             <h1>{player.PFName}</h1>
