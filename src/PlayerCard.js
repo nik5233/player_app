@@ -44,7 +44,7 @@ class PlayerCard extends Component {
                         <div className="more-info">
                             <h1>{player.PFName}</h1>
                             <div className="coords">
-                                <span>Group Name:  {player.TName}</span>
+                                <span>Team Name:  {player.TName}</span>
                             </div>
                             <div className="coords">
                                 <span>Position: {player.SkillDesc}</span>

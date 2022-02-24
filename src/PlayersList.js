@@ -7,7 +7,9 @@ class PlayersList extends Component {
     
         this.state = {
             PlayersData: [],
-            TeamData: []
+            TeamData: [],
+            searchValue: '',
+            isSearch: true
         }
     }
 
@@ -23,24 +25,48 @@ class PlayersList extends Component {
                 this.setState({PlayersData: data.playerList, TeamData: data.teamsList})
             });
     }
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log(event.target[0].value)
+        // console.log(event.target.input.value)
+        // alert('A name was submitted: ' + this.state.searchValue);
+        this.SearchIntoList(event.target[0].value)
+    }
 
-    // getPlayer(id){
-    //     const player = this.state.PlayersData.playerlist.filter(data =>  id === data.TID)
-    //     return player
-    // }
+    SearchIntoList(value){
+        this.setState({
+            searchValue: value !== "" && value,
+            isSearch: value !== "" ? true : false
+        })
 
-    // getTeam(id){
-    //     const player = this.state.PlayersData.teamlist.filter(data =>  id === data.TID)
-    //     return player
-    // }
+        fetch('https://api.npoint.io/20c1afef1661881ddc9c')
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({PlayersData: responseData.playerList.filter((data,id) => data.TName === value || data.PFName === value)})
+            });
+    }
+
+    handleReset(event){
+        document.getElementById("search-form").reset();
+        this.setState({
+            isSearch: false
+        })
+        this.getList()
+    }
 
     render() {
         return (
             this.state.PlayersData ? <div className="main-container">
-                {/* {console.log("object",this.state.PlayersData)}
-                {console.log(this.getPlayer("50139"))}
-                {console.log(this.getTeam("50139"))} */}
                 PlayersList
+                <form id="search-form" onSubmit={(e) => this.handleSubmit(e)} onReset={(e) => this.handleReset(e)}>
+                    <label>Search:
+                        <input type="text"/>
+                        {/* onChange={(e) => this.handleChange(e)} */}
+                    </label>
+                    <button type="submit" >Submit</button>
+                    <button type="reset" value="Reset" >clear</button>
+                </form>
+                {this.state.isSearch ? <p>Showing the total {this.state.PlayersData.length} result for  {this.state.searchValue}</p> : <>please Enter value</>}
                 <div className="grid-wrapper">
                     {this.state.PlayersData.map((data, id) => {
                         return <div key={data.Id}>
