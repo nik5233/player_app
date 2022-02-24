@@ -21,15 +21,11 @@ class PlayersList extends Component {
         fetch('https://api.npoint.io/20c1afef1661881ddc9c')
             .then(response => response.json())
             .then(data => {
-                // console.log(data.playerList)
                 this.setState({PlayersData: data.playerList, TeamData: data.teamsList})
             });
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log(event.target[0].value)
-        // console.log(event.target.input.value)
-        // alert('A name was submitted: ' + this.state.searchValue);
         this.SearchIntoList(event.target[0].value)
     }
 
@@ -61,7 +57,6 @@ class PlayersList extends Component {
                 <form id="search-form" onSubmit={(e) => this.handleSubmit(e)} onReset={(e) => this.handleReset(e)}>
                     <label>Search:
                         <input type="text"/>
-                        {/* onChange={(e) => this.handleChange(e)} */}
                     </label>
                     <button type="submit" >Submit</button>
                     <button type="reset" value="Reset" >clear</button>
